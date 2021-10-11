@@ -11,20 +11,20 @@ class ReadWriteLocker<K> {
 	}
 
 	fun <R> write(key: K, supplier: Supplier<R>): R {
-		lockFactory.getMutex(key).writeLock().lock()
+		lockFactory.getLock(key).writeLock().lock()
 		try {
 			return supplier.get()
 		} finally {
-			lockFactory.getMutex(key).writeLock().unlock()
+			lockFactory.getLock(key).writeLock().unlock()
 		}
 	}
 
 	fun <R> read(key: K, supplier: Supplier<R>): R {
-		lockFactory.getMutex(key).readLock().lock()
+		lockFactory.getLock(key).readLock().lock()
 		try {
 			return supplier.get()
 		} finally {
-			lockFactory.getMutex(key).readLock().unlock()
+			lockFactory.getLock(key).readLock().unlock()
 		}
 	}
 }
